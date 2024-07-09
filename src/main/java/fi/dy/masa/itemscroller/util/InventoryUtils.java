@@ -39,7 +39,6 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.Generic3x3ContainerScreenHandler;
 import net.minecraft.screen.MerchantScreenHandler;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.CraftingResultSlot;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.screen.slot.TradeOutputSlot;
@@ -47,9 +46,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import fi.dy.masa.itemscroller.mixin.IMixinCraftingResultSlot;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntComparator;
 
@@ -478,15 +474,30 @@ public class InventoryUtils {
             ScreenHandler container = gui.getScreenHandler();
             stackReference = stackReference.copy();
 
-            for (Slot slot : container.slots) {
-                // If this slot is in the same inventory that the items were picked up to the
-                // cursor from
-                // and the stack is identical to the one in the cursor, then this stack will get
-                // dropped.
-                if (areSlotsInSameInventory(slot, slotReference) == sameInventory &&
-                        areStacksEqual(slot.getStack(), stackReference)) {
-                    // Drop the stack
-                    dropStack(gui, slot.id);
+            if (gui instanceof CreativeInventoryScreen) {
+                MinecraftClient mc = MinecraftClient.getInstance();
+                if (mc.player == null) {
+                    return;
+                }
+
+                for(int i = 0; i < mc.player.playerScreenHandler.getStacks().size(); ++i) {
+                    ItemStack stack = mc.player.playerScreenHandler.getStacks().get(i);
+                    if (areStacksEqual(stack, stackReference)) {
+                        // Drop the stack
+                        dropStack(gui, i);
+                    }
+                }
+            } else {
+                for (Slot slot : container.slots) {
+                    // If this slot is in the same inventory that the items were picked up to the
+                    // cursor from
+                    // and the stack is identical to the one in the cursor, then this stack will get
+                    // dropped.
+                    if (areSlotsInSameInventory(slot, slotReference) == sameInventory &&
+                            areStacksEqual(slot.getStack(), stackReference)) {
+                        // Drop the stack
+                        dropStack(gui, slot.id);
+                    }
                 }
             }
         }

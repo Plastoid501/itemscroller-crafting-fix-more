@@ -36,6 +36,7 @@ public class Configs implements IConfigHandler
         public static final ConfigInteger MASS_CRAFT_INTERVAL                   = new ConfigInteger("massCraftInterval",                    1, 1, 60, "The interval in game ticks the massCraft operation is repeated at");
         public static final ConfigBoolean SCROLL_CRAFT_STORE_RECIPES_TO_FILE    = new ConfigBoolean("craftingRecipesSaveToFile",            true, "If enabled, then the crafting features recipes are saved to a file\ninside minecraft/itemscroller/recipes_worldorservername.nbt.\nThis makes the recipes persistent across game restarts.");
         public static final ConfigBoolean SCROLL_CRAFT_RECIPE_FILE_GLOBAL       = new ConfigBoolean("craftingRecipesSaveFileIsGlobal",      false, "If true, then the recipe file is global, instead\n of being saved per-world or server");
+        public static final ConfigBoolean ONLY_CRAFT_FIREWORK_ROCKET_LVL3       = new ConfigBoolean("onlyCraftFireworkRocketLvl3",          false, "If true, cannot craft firework rocket lvl1 and 2.");
         public static final ConfigBoolean REVERSE_SCROLL_DIRECTION_SINGLE       = new ConfigBoolean("reverseScrollDirectionSingle",         false, "Reverse the scrolling direction for single item mode.");
         public static final ConfigBoolean REVERSE_SCROLL_DIRECTION_STACKS       = new ConfigBoolean("reverseScrollDirectionStacks",         false, "Reverse the scrolling direction for full stacks mode.");
         public static final ConfigBoolean SLOT_POSITION_AWARE_SCROLL_DIRECTION  = new ConfigBoolean("useSlotPositionAwareScrollDirection",  false, "When enabled, the item movement direction depends\non the slots' y-position on screen. Might be derpy with more\ncomplex inventories, use with caution!");
@@ -52,6 +53,7 @@ public class Configs implements IConfigHandler
                 MASS_CRAFT_MULTIPLIER,
                 SCROLL_CRAFT_STORE_RECIPES_TO_FILE,
                 SCROLL_CRAFT_RECIPE_FILE_GLOBAL,
+                ONLY_CRAFT_FIREWORK_ROCKET_LVL3,
                 REVERSE_SCROLL_DIRECTION_SINGLE,
                 REVERSE_SCROLL_DIRECTION_STACKS,
                 SLOT_POSITION_AWARE_SCROLL_DIRECTION,
